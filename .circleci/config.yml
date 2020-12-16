@@ -60,7 +60,7 @@ workflows:
             - shellcheck/check
       # Publish development version(s) of the orb.
       - orb-tools/publish-dev:
-          orb-name: <namespace>/<orb-name>
+          orb-name: coingaming/stacks-update
           context: global # A restricted context containing your private publishing credentials. Will only execute if approved by an authorized user.
           requires: [hold-for-dev-publish]
       # Trigger an integration workflow to test the
