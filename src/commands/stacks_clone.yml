@@ -1,0 +1,14 @@
+description: >
+  Clone stacks repo.
+# What will this command do?
+# Descriptions should be short, simple, and clear.
+parameters:
+  branch:
+    default: "t1"
+    type: string
+  repo:
+    default: ""
+    type: string
+    description: "repo to clone, for example git@github.com:your-org/your-repo.git"
+steps:
+  - run: git clone -b <<parameters.branch>> <<parameters.repo>> .
