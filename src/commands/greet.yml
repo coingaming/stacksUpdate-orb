@@ -7,9 +7,14 @@ parameters:
     type: string
     default: "World"
     description: "Hello to whom?"
+  and:
+    type: string
+    default: "Hell"
+    description: "and to whom?"
 steps:
   - run:
       environment:
         PARAM_TO: <<parameters.to>>
+        PARAM_AND: <<parameters.and>>
       name: Hello Greeting
       command: <<include(scripts/greet.sh)>>
