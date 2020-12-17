@@ -1,0 +1,19 @@
+description: >
+  Update t1
+# What will this job do?
+# Descriptions should be short, simple, and clear.
+
+executor: default
+
+parameters:
+  branch:
+    default: "t1"
+    type: string
+  repo:
+    default: ""
+    type: string
+    description: "repo to clone, for example git@github.com:your-org/your-repo.git"
+steps:
+  - stacks_clone:
+      branch: << parameters.branch >>
+      repo: << parameters.repo >>
