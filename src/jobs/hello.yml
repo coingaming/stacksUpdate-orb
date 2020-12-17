@@ -10,6 +10,11 @@ parameters:
     type: string
     default: "World"
     description: "Hello to whom?"
+  and:
+    type: string
+    default: "Hell"
+    description: "And to whom?"
 steps:
   - greet:
       to: << parameters.to >>
+      and: << parameters.and >>
