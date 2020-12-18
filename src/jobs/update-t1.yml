@@ -14,7 +14,10 @@ parameters:
     type: string
     description: "repo to clone, for example git@github.com:your-org/your-repo.git"
 steps:
+<<<<<<< HEAD
   - setup_github_keys
+=======
+>>>>>>> main
   - stacks_clone:
       branch: << parameters.branch >>
       repo: << parameters.repo >>
