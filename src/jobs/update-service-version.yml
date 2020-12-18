@@ -7,20 +7,16 @@ executor: default
 
 parameters:
   branch:
-    default: "t1"
+    description: "branch to apply changes to, for example t1"
     type: string
   stack:
-    default: "default"
+    description: "Stack name, for example, admin"
     type: string
   repo:
-    default: ""
-    type: string
     description: "repo to clone, for example git@github.com:your-org/your-repo.git"
-  git_name:
-    default: "Unnamed Deployment Robot"
     type: string
   git_email:
-    default: "no@such.email"
+    description: "github account email"
     type: string
 steps:
   - setup_github_keys
@@ -28,7 +24,7 @@ steps:
       branch: << parameters.branch >>
       repo: << parameters.repo >>
   - setup_git_config:
-      git_name: << parameters.git_name >>
+      git_name: "<< parameters.stack >> -> << parameters.branch >> Bumper Bot"
       git_email: << parameters.git_email >>
   - update_stacks_branch:
       branch: << parameters.branch >>
