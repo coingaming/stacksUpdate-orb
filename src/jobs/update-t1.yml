@@ -13,17 +13,17 @@ parameters:
     default: ""
     type: string
     description: "repo to clone, for example git@github.com:your-org/your-repo.git"
-  robot_name:
+  git_name:
     default: "Unnamed Deployment Robot"
     type: string
-  robot_email:
+  git_email:
     default: "no@such.email"
     type: string
 steps:
   - setup_github_keys
   - setup_git_config:
-    robot_name: << parameters.robot_name >>
-    robot_email: << parameters.robot_email >>
+    git_name: << parameters.git_name >>
+    git_email: << parameters.git_email >>
   - stacks_clone:
       branch: << parameters.branch >>
       repo: << parameters.repo >>

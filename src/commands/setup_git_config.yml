@@ -1,13 +1,13 @@
 description: >
   Setup config for git
 parameters:
-  robot_name:
+  git_name:
     default: "Unnamed Deployment Robot"
     type: string
-  robot_email:
+  git_email:
     default: "no@such.email"
     type: string
 steps:
-  - run: git config user.email "<< parameters.robot_email >>"
-  - run: git config user.name "<< parameters.robot_name >>"
+  - run: git config user.email "<< parameters.git_email >>"
+  - run: git config user.name "<< parameters.git_name >>"
   - run: git config --global push.default matching
