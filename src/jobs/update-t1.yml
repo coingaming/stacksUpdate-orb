@@ -21,9 +21,6 @@ parameters:
     type: string
 steps:
   - setup_github_keys
-  - setup_git_config:
-      git_name: << parameters.git_name >>
-      git_email: << parameters.git_email >>
   - stacks_clone:
       branch: << parameters.branch >>
       repo: << parameters.repo >>
