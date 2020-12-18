@@ -4,4 +4,8 @@ steps:
   - run: mkdir -p ~/.ssh
   - run: echo "$ROBOT_SSH_KEY" | base64 -d > ~/.ssh/id_rsa.robot && chmod 600 ~/.ssh/id_rsa.robot && ssh-add ~/.ssh/id_rsa.robot
   - run: echo -e "Host github.com\n Hostname github.com\n IdentityFile ~/.ssh/id_rsa.robot\n IdentitiesOnly yes" > ~/.ssh/config
+<<<<<<< HEAD
   - run: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+=======
+  - run: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+>>>>>>> 780cd95... add keys setup
