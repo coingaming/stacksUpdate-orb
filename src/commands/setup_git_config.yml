@@ -1,3 +1,5 @@
+description: >
+  Setup config for git
 parameters:
   robot_name:
     default: "Unnamed Deployment Robot"
