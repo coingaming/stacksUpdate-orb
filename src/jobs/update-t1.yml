@@ -9,6 +9,9 @@ parameters:
   branch:
     default: "t1"
     type: string
+  stack:
+    default: "default"
+    type: string
   repo:
     default: ""
     type: string
@@ -27,3 +30,6 @@ steps:
   - setup_git_config:
       git_name: << parameters.git_name >>
       git_email: << parameters.git_email >>
+  - update_stacks_branch:
+      branch: << parameters.branch >>
+      stack: << parameters.stack >>
