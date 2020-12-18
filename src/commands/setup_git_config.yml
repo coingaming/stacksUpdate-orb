@@ -1,0 +1,11 @@
+parameters:
+  robot-name:
+    default: "Unnamed Deployment Robot"
+    type: string
+  robot-email:
+    default: "no@such.email"
+    type: string
+steps:
+  - run: git config user.email "<< parameters.robot-email >>"
+  - run: git config user.name "<< parameters.robot-name >>"
+  - run: git config --global push.default matching
