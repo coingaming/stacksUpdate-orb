@@ -1,0 +1,17 @@
+description: >
+  Update needed branch with an new version of a service
+parameters:
+  branch:
+    default: "t1"
+    type: string
+  stack:
+    default: "admin"
+    type: string
+steps:
+  - run: git branch --set-upstream-to=origin/<<parameters.branch>> <<parameters.branch>>
+  - run: git pull
+  - run: sed -E "s/($CIRCLE_PROJECT_REPONAME:v)([0-9.-]+)/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG/g" docker-compose.<<parameters.stack>>.yml > docker-compose.<<parameters.stack>>.temp.yml
+  - run: mv docker-compose.<<parameters.stack>>.temp.yml docker-compose.<<parameters.stack>>.yml
+  - run: git status
+  - run: git commit -a -m "Bumping $CIRCLE_PROJECT_REPONAME version to $CIRCLE_TAG"
+  - run: git push
