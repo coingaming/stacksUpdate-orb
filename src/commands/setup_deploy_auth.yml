@@ -1,0 +1,4 @@
+description: >
+  Setup deploy auth
+steps:
+  - run: echo "{\"user\":\"$DEPLOY_USER\", \"pass\":\"$DEPLOY_PASS\"}" > $HOME/.deploy_auth

@@ -1,0 +1,17 @@
+description: >
+  Deploy to stack
+parameters:
+  where_to_deploy:
+    description: "Which env to deploy. For example prelive"
+    type: string
+  stack:
+    description: "Which stack to deploy. For example admin"
+    type: string
+  branch:
+    description: "Branch to deploy. Usually the same with env"
+    type: string
+steps:
+  - setup_deploy_auth
+  - setup_deploy_cert
+  - install_deploy_token
+  - run: npx @heathmont/deploy-cli -e << parameters.where_to_deploy >> -s << parameters.stack >> -t << parameters.branch >> --cert-file $HOME/.deploy_cert.pem --key-file $HOME/.deploy_key.pem --ca-file $HOME/.deploy_ca.pem -y
