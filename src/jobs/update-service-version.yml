@@ -18,6 +18,12 @@ parameters:
   git_email:
     description: "github account email"
     type: string
+  circle_project_repo_name:
+    description: "Project repo name, usually can be taken from CI as $CIRCLE_PROJECT_REPO_NAME"
+    type: string
+  circle_tag:
+    description: "Project tag, usually can be taken from CI as $CIRCLE_TAG"
+    type: string
 steps:
   - setup_github_keys
   - stacks_clone:
@@ -29,3 +35,5 @@ steps:
   - update_stacks_branch:
       branch: << parameters.branch >>
       stack: << parameters.stack >>
+      circle_project_repo_name: << parameters.circle_project_repo_name >>
+      circle_tag: << parameters.circle_tag >>
