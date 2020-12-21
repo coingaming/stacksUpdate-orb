@@ -7,11 +7,15 @@ parameters:
   stack:
     default: "admin"
     type: string
+  circle_project_repo_name:
+    type: string
+  circle_tag:
+    type: string
 steps:
   - run: git branch --set-upstream-to=origin/<<parameters.branch>> <<parameters.branch>>
   - run: git pull
-  - run: sed -E "s/($CIRCLE_PROJECT_REPONAME:v)([0-9.-]+)/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG/g" docker-compose.<<parameters.stack>>.yml > docker-compose.<<parameters.stack>>.temp.yml
+  - run: sed -E "s/(<<parameters.circle_project_repo_name>>:v)([0-9.-]+)/<<parameters.circle_project_repo_name>>:<<parameters.circle_tag>>/g" docker-compose.<<parameters.stack>>.yml > docker-compose.<<parameters.stack>>.temp.yml
   - run: mv docker-compose.<<parameters.stack>>.temp.yml docker-compose.<<parameters.stack>>.yml
   - run: git status
-  - run: git commit -a -m "Bumping $CIRCLE_PROJECT_REPONAME version to $CIRCLE_TAG"
+  - run: git commit -a -m "Bumping <<parameters.circle_project_repo_name>> version to <<parameters.circle_tag>>"
   - run: git push
