@@ -21,8 +21,8 @@ steps:
   - run: git branch --set-upstream-to=origin/<<parameters.branch>> <<parameters.branch>>
   - run: git pull
   - run: wget https://github.com/mikefarah/yq/releases/download/<<parameters.yq_version>>/<<parameters.yq_binary>> -O ~/yq && chmod +x ~/yq
-  - run: ~/yq w -i docker-compose.<<parameters.stack>>.yml services.<<parameters.circle_project_repo_name>>.image "<<parameters.circle_project_repo_name>>:<<parameters.circle_tag>>"
-  - run: mv docker-compose.<<parameters.stack>>.temp.yml docker-compose.<<parameters.stack>>.yml
+  - run: ~/yq eval '.services.<<parameters.circle_project_repo_name>>.image="<<parameters.circle_project_repo_name>>:<<parameters.circle_tag>>"' docker-compose.<<parameters.stack>>.yml > docker-compose.<<parameters.stack>>.tmp.yml
+  - run: mv docker-compose.<<parameters.stack>>.tmp.yml docker-compose.<<parameters.stack>>.yml
   - run: git status
   - run: git commit -a -m "Bumping <<parameters.circle_project_repo_name>> version to <<parameters.circle_tag>>"
   - run: git push
