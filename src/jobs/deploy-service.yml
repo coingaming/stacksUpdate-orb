@@ -1,5 +1,8 @@
 description: >
   Deploy to stack
+
+executor: default
+
 parameters:
   where_to_deploy:
     description: "Which env to deploy. For example prelive"
