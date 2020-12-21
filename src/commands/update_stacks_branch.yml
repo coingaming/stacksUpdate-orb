@@ -11,10 +11,17 @@ parameters:
     type: string
   circle_tag:
     type: string
+  yq_version:
+    type: string
+    default: "4.0.0"
+  yq_binary:
+    type: string
+    default: "yq_linux_amd64"
 steps:
   - run: git branch --set-upstream-to=origin/<<parameters.branch>> <<parameters.branch>>
   - run: git pull
-  - run: sed -E "s/(<<parameters.circle_project_repo_name>>:v)([0-9.-]+)/<<parameters.circle_project_repo_name>>:<<parameters.circle_tag>>/g" docker-compose.<<parameters.stack>>.yml > docker-compose.<<parameters.stack>>.temp.yml
+  - run: wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY} -O /usr/bin/yq && chmod +x /usr/bin/yq
+  - run: yq w -i docker-compose.<<parameters.stack>>.yml services.<<parameters.circle_project_repo_name>>.image "<<parameters.circle_project_repo_name>>:<<parameters.circle_tag>>"
   - run: mv docker-compose.<<parameters.stack>>.temp.yml docker-compose.<<parameters.stack>>.yml
   - run: git status
   - run: git commit -a -m "Bumping <<parameters.circle_project_repo_name>> version to <<parameters.circle_tag>>"
