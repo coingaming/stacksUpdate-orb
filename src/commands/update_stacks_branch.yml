@@ -9,20 +9,28 @@ parameters:
     type: string
   circle_project_repo_name:
     type: string
+    default: ""
   circle_tag:
     type: string
+    default: ""
   yq_version:
     type: string
-    default: "4.0.0"
+    default: "3.4.1"
   yq_binary:
     type: string
     default: "yq_linux_amd64"
 steps:
+  - run:
+      name: Choose appropriate repo name and tag
+      command: |
+        [ -z "<<parameters.circle_project_repo_name>>" ] && export service=$CIRCLE_PROJECT_REPO_NAME
+        [ -n "<<parameters.circle_project_repo_name>>" ] && export service=<<parameters.circle_project_repo_name>>
+        [ -z "<<parameters.circle_tag>>" ] && export image=$CIRCLE_TAG
+        [ -n "<<parameters.circle_tag>>" ] && export image=<<parameters.circle_tag>>
   - run: git branch --set-upstream-to=origin/<<parameters.branch>> <<parameters.branch>>
   - run: git pull
   - run: wget https://github.com/mikefarah/yq/releases/download/<<parameters.yq_version>>/<<parameters.yq_binary>> -O ~/yq && chmod +x ~/yq
-  - run: ~/yq eval '.services.<<parameters.circle_project_repo_name>>.image="<<parameters.circle_project_repo_name>>:<<parameters.circle_tag>>"' docker-compose.<<parameters.stack>>.yml > docker-compose.<<parameters.stack>>.tmp.yml
-  - run: mv docker-compose.<<parameters.stack>>.tmp.yml docker-compose.<<parameters.stack>>.yml
+  - run: ~/yq w -i docker-compose.<<parameters.stack>>.yml services.$service.image "$image"
   - run: git status
   - run: git commit -a -m "Bumping <<parameters.circle_project_repo_name>> version to <<parameters.circle_tag>>"
   - run: git push
