@@ -20,18 +20,18 @@ parameters:
     type: string
     default: "yq_linux_amd64"
 steps:
+  - run: git branch --set-upstream-to=origin/<<parameters.branch>> <<parameters.branch>>
+  - run: git pull
   - run:
-      name: Choose appropriate repo name and tag
+      name: Choose appropriate repo name and tag, and change it in stacks file
       command: |
+        wget https://github.com/mikefarah/yq/releases/download/<<parameters.yq_version>>/<<parameters.yq_binary>> -O ~/yq && chmod +x ~/yq
         [ -z "<<parameters.circle_project_repo_name>>" ] && export service=$CIRCLE_PROJECT_REPO_NAME
         [ -n "<<parameters.circle_project_repo_name>>" ] && export service=<<parameters.circle_project_repo_name>>
         [ -z "<<parameters.circle_tag>>" ] && export image=$CIRCLE_TAG
         [ -n "<<parameters.circle_tag>>" ] && export image=<<parameters.circle_tag>>
         echo "service is $service and image is $image"
-        git branch --set-upstream-to=origin/<<parameters.branch>> <<parameters.branch>>
-        git pull
-        wget https://github.com/mikefarah/yq/releases/download/<<parameters.yq_version>>/<<parameters.yq_binary>> -O ~/yq && chmod +x ~/yq
         ~/yq w -i docker-compose.<<parameters.stack>>.yml services.$service.image "$image"
-        git status
-        git commit -a -m "Bumping <<parameters.circle_project_repo_name>> version to <<parameters.circle_tag>>"
-        git push
+  - run: git diff
+  - run: git commit -a -m "Bumping <<parameters.circle_project_repo_name>> version to <<parameters.circle_tag>>"
+  - run: git push
