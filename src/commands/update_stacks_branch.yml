@@ -20,10 +20,12 @@ parameters:
     type: string
     default: "yq_linux_amd64"
 steps:
-  - run: [ -z "<<parameters.circle_project_repo_name>>" ] && export service=$CIRCLE_PROJECT_REPO_NAME
-  - run: [ -n "<<parameters.circle_project_repo_name>>" ] && export service=<<parameters.circle_project_repo_name>>
-  - run: [ -z "<<parameters.circle_tag>>" ] && export image=$CIRCLE_TAG
-  - run: [ -n "<<parameters.circle_tag>>" ] && export image=<<parameters.circle_tag>>
+  - run: 
+    command: |
+      [ -z "<<parameters.circle_project_repo_name>>" ] && export service=$CIRCLE_PROJECT_REPO_NAME
+      [ -n "<<parameters.circle_project_repo_name>>" ] && export service=<<parameters.circle_project_repo_name>>
+      [ -z "<<parameters.circle_tag>>" ] && export image=$CIRCLE_TAG
+      [ -n "<<parameters.circle_tag>>" ] && export image=<<parameters.circle_tag>>
   - run: git branch --set-upstream-to=origin/<<parameters.branch>> <<parameters.branch>>
   - run: git pull
   - run: wget https://github.com/mikefarah/yq/releases/download/<<parameters.yq_version>>/<<parameters.yq_binary>> -O ~/yq && chmod +x ~/yq

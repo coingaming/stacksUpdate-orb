@@ -17,4 +17,7 @@ steps:
   - setup_deploy_auth
   - setup_deploy_cert
   - install_deploy_token
-  - run: npx @heathmont/deploy-cli -e << parameters.where_to_deploy >> -s << parameters.stack >> -t << parameters.branch >> --cert-file $HOME/.deploy_cert.pem --key-file $HOME/.deploy_key.pem --ca-file $HOME/.deploy_ca.pem -y
+  - run: 
+    command: |
+      npx @heathmont/deploy-cli -e << parameters.where_to_deploy >> -s << parameters.stack >> -t << parameters.branch >> \
+        --cert-file $HOME/.deploy_cert.pem --key-file $HOME/.deploy_key.pem --ca-file $HOME/.deploy_ca.pem -y
