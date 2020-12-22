@@ -20,7 +20,7 @@ parameters:
     type: string
     default: "yq_linux_amd64"
 steps:
-  - run: 
+  - run:
     command: |
       [ -z "<<parameters.circle_project_repo_name>>" ] && export service=$CIRCLE_PROJECT_REPO_NAME
       [ -n "<<parameters.circle_project_repo_name>>" ] && export service=<<parameters.circle_project_repo_name>>
