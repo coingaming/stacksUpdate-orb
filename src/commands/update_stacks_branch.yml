@@ -33,5 +33,5 @@ steps:
         echo "service is $service and image is $image"
         ~/yq w -i docker-compose.<<parameters.stack>>.yml services.$service.image "heathmont/$service:$image"
   - run: git diff
-  - run: git commit -a -m "Bumping <<parameters.circle_project_repo_name>> version to <<parameters.circle_tag>>"
+  - run: git commit -a -m "Bumping $CIRCLE_PROJECT_REPONAME version to $CIRCLE_TAG"
   - run: git push
