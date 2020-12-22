@@ -28,10 +28,10 @@ steps:
         [ -z "<<parameters.circle_tag>>" ] && export image=$CIRCLE_TAG
         [ -n "<<parameters.circle_tag>>" ] && export image=<<parameters.circle_tag>>
         echo "service is $service and image is $image"
-  - run: git branch --set-upstream-to=origin/<<parameters.branch>> <<parameters.branch>>
-  - run: git pull
-  - run: wget https://github.com/mikefarah/yq/releases/download/<<parameters.yq_version>>/<<parameters.yq_binary>> -O ~/yq && chmod +x ~/yq
-  - run: ~/yq w -i docker-compose.<<parameters.stack>>.yml services.$service.image "$image"
-  - run: git status
-  - run: git commit -a -m "Bumping <<parameters.circle_project_repo_name>> version to <<parameters.circle_tag>>"
-  - run: git push
+        git branch --set-upstream-to=origin/<<parameters.branch>> <<parameters.branch>>
+        git pull
+        wget https://github.com/mikefarah/yq/releases/download/<<parameters.yq_version>>/<<parameters.yq_binary>> -O ~/yq && chmod +x ~/yq
+        ~/yq w -i docker-compose.<<parameters.stack>>.yml services.$service.image "$image"
+        git status
+        git commit -a -m "Bumping <<parameters.circle_project_repo_name>> version to <<parameters.circle_tag>>"
+        git push
