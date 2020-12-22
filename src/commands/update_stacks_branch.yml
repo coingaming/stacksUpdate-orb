@@ -26,7 +26,7 @@ steps:
       name: Choose appropriate repo name and tag, and change it in stacks file
       command: |
         wget https://github.com/mikefarah/yq/releases/download/<<parameters.yq_version>>/<<parameters.yq_binary>> -O ~/yq && chmod +x ~/yq
-        [ -z "<<parameters.circle_project_repo_name>>" ] && export service=$CIRCLE_PROJECT_REPO_NAME
+        [ -z "<<parameters.circle_project_repo_name>>" ] && export service=$CIRCLE_PROJECT_REPONAME
         [ -n "<<parameters.circle_project_repo_name>>" ] && export service=<<parameters.circle_project_repo_name>>
         [ -z "<<parameters.circle_tag>>" ] && export image=$CIRCLE_TAG
         [ -n "<<parameters.circle_tag>>" ] && export image=<<parameters.circle_tag>>
