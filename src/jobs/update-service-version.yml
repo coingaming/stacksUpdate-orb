@@ -20,9 +20,11 @@ parameters:
     type: string
   circle_project_repo_name:
     description: "Project repo name, usually can be taken from CI as $CIRCLE_PROJECT_REPO_NAME"
+    default: ""
     type: string
   circle_tag:
     description: "Project tag, usually can be taken from CI as $CIRCLE_TAG"
+    default: ""
     type: string
 steps:
   - setup_github_keys
