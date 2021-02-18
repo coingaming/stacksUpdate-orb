@@ -13,6 +13,9 @@ parameters:
   circle_tag:
     type: string
     default: ""
+  stacks_services:
+    type: string
+    default: ""
   yq_version:
     type: string
     default: "3.4.1"
@@ -31,6 +34,14 @@ steps:
         [ -z "<<parameters.circle_tag>>" ] && export image=$CIRCLE_TAG
         [ -n "<<parameters.circle_tag>>" ] && export image=<<parameters.circle_tag>>
         echo "service is $service and image is $image"
-        ~/yq w -i docker-compose.<<parameters.stack>>.yml services.$service.image "heathmont/$service:$image"
+        if [ -z "<<parameters.stacks_services>>" ]
+        then
+          ~/yq w -i docker-compose.<<parameters.stack>>.yml services.$service.image "heathmont/$service:$image"
+        else
+          for i in <<parameters.stacks_services>>; do
+            echo "replacing image version for service $i"
+            ~/yq w -i docker-compose.<<parameters.stack>>.yml services.$i.image "heathmont/$service:$image"
+          done
+        fi
   - run: git commit -a -m "Bumping $CIRCLE_PROJECT_REPONAME version to $CIRCLE_TAG"
   - run: git push
