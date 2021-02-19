@@ -26,6 +26,10 @@ parameters:
     description: "Project tag, usually can be taken from CI as $CIRCLE_TAG"
     default: ""
     type: string
+  stacks_services:
+    description: "List of service names to update, separated by spaces. Also useful when service name does not match circle_project_repo_name"
+    default: ""
+    type: string
 steps:
   - setup_github_keys
   - stacks_clone:
@@ -39,3 +43,4 @@ steps:
       stack: << parameters.stack >>
       circle_project_repo_name: << parameters.circle_project_repo_name >>
       circle_tag: << parameters.circle_tag >>
+      stacks_services: << parameters.stacks_services >>
