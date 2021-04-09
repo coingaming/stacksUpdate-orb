@@ -18,7 +18,8 @@ parameters:
     type: string
     description: "Title of PR"
 steps:
-  - run: |
+  - run: 
+    command: |
       curl \
         -X POST \
         -H "Accept: application/vnd.github.v3+json" \
