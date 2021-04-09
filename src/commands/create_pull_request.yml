@@ -1,0 +1,28 @@
+description: >
+  Creates PR
+parameters:
+  project:
+    default: ""
+    type: string
+    description: "Project name as in github"
+  head:
+    default: ""
+    type: string
+    description: "Branch you want to merge"
+  base:
+    default: ""
+    type: string
+    description: "Branch Into want to merge"
+  title:
+    default: ""
+    type: string
+    description: "Title of PR"
+steps:
+  - run:
+      command: |
+        curl \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token $GITHUB_TOKEN" \
+          https://api.github.com/repos/coingaming/<<parameters.project>>/pulls \
+          -d '{"head":"'"<<parameters.head>>"'","base":"<<parameters.base>>","title":"<<parameters.title>>"}'
