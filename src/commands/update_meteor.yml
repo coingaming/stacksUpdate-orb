@@ -1,0 +1,13 @@
+description: >
+  Updates meteor version in project. Working dir should be inside of meteor project
+parameters:
+  branch_name:
+    default: ""
+    type: string
+    description: "Branch name"
+steps:
+  - run: |
+    echo "Updating meteor to ${CIRCLE_TAG}"
+      sed -i "s/METEOR_VERSION: .*/METEOR_VERSION: ${CIRCLE_TAG}/g" .circleci/config.yml
+      git commit -am "feat: meteor update to ${CIRCLE_TAG}"
+      git push origin "<<parameters.branch_name>>"

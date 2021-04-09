@@ -1,0 +1,9 @@
+description: >
+  Creates new branch. Working dir should be inside of git repo
+parameters:
+  branch_name:
+    default: ""
+    type: string
+    description: "Branch name"
+steps:
+  - run: git checkout -b "<<parameters.branch_name>>"
