@@ -1,0 +1,9 @@
+description: >
+  Clone particular repo
+parameters:
+  project:
+    default: ""
+    type: string
+    description: "Project name, as it is named in github"
+steps:
+  - run: git clone git@github.com:coingaming/<<parameters.project>>.git .
