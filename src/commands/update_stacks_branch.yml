@@ -13,6 +13,9 @@ parameters:
   circle_tag:
     type: string
     default: ""
+  stacks_services:
+    type: string
+    default: ""
   yq_version:
     type: string
     default: "3.4.1"
@@ -26,11 +29,19 @@ steps:
       name: Choose appropriate repo name and tag, and change it in stacks file
       command: |
         wget https://github.com/mikefarah/yq/releases/download/<<parameters.yq_version>>/<<parameters.yq_binary>> -O ~/yq && chmod +x ~/yq
-        [ -z "<<parameters.circle_project_repo_name>>" ] && export service=$CIRCLE_PROJECT_REPONAME
-        [ -n "<<parameters.circle_project_repo_name>>" ] && export service=<<parameters.circle_project_repo_name>>
+        [ -z "<<parameters.circle_project_repo_name>>" ] && export repo=$CIRCLE_PROJECT_REPONAME
+        [ -n "<<parameters.circle_project_repo_name>>" ] && export repo=<<parameters.circle_project_repo_name>>
         [ -z "<<parameters.circle_tag>>" ] && export image=$CIRCLE_TAG
         [ -n "<<parameters.circle_tag>>" ] && export image=<<parameters.circle_tag>>
-        echo "service is $service and image is $image"
-        ~/yq w -i docker-compose.<<parameters.stack>>.yml services.$service.image "heathmont/$service:$image"
+        echo "repo is $repo and image is $image"
+        if [ -z "<<parameters.stacks_services>>" ]
+        then
+          ~/yq w -i docker-compose.<<parameters.stack>>.yml services.$repo.image "heathmont/$repo:$image"
+        else
+          for i in <<parameters.stacks_services>>; do
+            echo "replacing image version for service $i"
+            ~/yq w -i docker-compose.<<parameters.stack>>.yml services.$i.image "heathmont/$repo:$image"
+          done
+        fi
   - run: git commit -a -m "Bumping $CIRCLE_PROJECT_REPONAME version to $CIRCLE_TAG"
   - run: git push
