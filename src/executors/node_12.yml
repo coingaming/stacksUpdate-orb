@@ -1,0 +1,12 @@
+description: >
+  This is a sample executor using Docker and Node.
+docker:
+  - image: 'circleci/node:12.18.2'
+working_directory: ~/<<parameters.working_directory>>
+
+parameters:
+  working_directory:
+    default: ""
+    description: >
+      Working directory of executor
+    type: string
