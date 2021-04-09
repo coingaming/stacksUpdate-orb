@@ -1,0 +1,31 @@
+description:
+  Update meteor version for given service
+
+executor:
+  name: node_12
+  working_directory: <<parameters.project_name>>
+
+parameters:
+  project_name:
+    description: "project name as in github"
+    type: string
+  branch_name:
+    description: "Branch name for changed meteor version"
+    type: string
+
+steps:
+  - setup_github_keys
+  - repo_clone:
+      project: "<<parameters.project_name>>"
+  - create_branch:
+      branch_name: "<<parameters.branch_name>>"
+  - setup_git_config:
+      git_name: "Meteor updater"
+      git_email: "meteor.updater@heathmont.com"
+  - update_meteor:
+      branch_name: "<<parameters.branch_name>>"
+  - create_pull_request:
+      project: "<<parameters.project_name>>s"
+      head: "<<parameters.branch_name>>"
+      base: "develop"
+      title: "Meteor update"
