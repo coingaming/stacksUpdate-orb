@@ -1,7 +1,7 @@
 description:
   Update meteor version for given service
 
-executor: 
+executor:
   name: node_12
   working_directory: <<parameters.project_name>>
 
