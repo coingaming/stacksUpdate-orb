@@ -25,7 +25,7 @@ steps:
   - update_meteor:
       branch_name: "<<parameters.branch_name>>"
   - create_pull_request:
-      project: "<<parameters.project_name>>s"
+      project: "<<parameters.project_name>>"
       head: "<<parameters.branch_name>>"
       base: "develop"
       title: "Meteor update"
