@@ -6,7 +6,7 @@ parameters:
     type: string
     description: "Branch name"
 steps:
-  - run: 
+  - run:
     command: |
       echo "Updating meteor to ${CIRCLE_TAG}"
       sed -i "s/METEOR_VERSION: .*/METEOR_VERSION: ${CIRCLE_TAG}/g" .circleci/config.yml
