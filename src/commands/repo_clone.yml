@@ -7,4 +7,3 @@ parameters:
     description: "Project name, as it is named in github"
 steps:
   - run: git clone git@github.com:coingaming/<<parameters.project>>.git .
-  
