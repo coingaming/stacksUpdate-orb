@@ -1,0 +1,14 @@
+description: >
+  Updates meteor version in project. Working dir should be inside of meteor project
+parameters:
+  branch_name:
+    default: ""
+    type: string
+    description: "Branch name"
+steps:
+  - run:
+      command: |
+        echo "Updating lsl to ${CIRCLE_TAG}"
+        sed -i "s/loyalty_shared_libs.*/loyalty_shared_libs, \"$CIRCLE_TAG\", organization: \"coingaming\"},/" mix.exs
+        git commit -am "chore: lsl update to ${CIRCLE_TAG}"
+        git push origin "<<parameters.branch_name>>"

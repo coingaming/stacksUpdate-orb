@@ -1,0 +1,34 @@
+description:
+  Update loyalty_shared_libs version for given service
+
+executor:
+  name: node_12
+  working_directory: <<parameters.project_name>>
+
+parameters:
+  project_name:
+    description: "project name as in github"
+    type: string
+  head_branch_name:
+    description: "Head branch name for changed meteor version"
+    type: string
+  base_branch_name:
+    description: "Base branch name for changed meteor version"
+    type: string
+
+steps:
+  - setup_github_keys
+  - repo_clone:
+      project: "<<parameters.project_name>>"
+  - create_branch:
+      branch_name: "<<parameters.head_branch_name>>"
+  - setup_git_config:
+      git_name: "Lsl updater"
+      git_email: "lsl.updater@heathmont.com"
+  - update_lsl:
+      branch_name: "<<parameters.head_branch_name>>"
+  - create_pull_request:
+      project: "<<parameters.project_name>>"
+      head: "<<parameters.head_branch_name>>"
+      base: "<<parameters.base_branch_name>>"
+      title: "Lsl update"
