@@ -9,6 +9,7 @@ steps:
   - run:
       command: |
         echo "Updating lsl to ${CIRCLE_TAG}"
-        sed -i "s/loyalty_shared_libs.*/loyalty_shared_libs, \"$CIRCLE_TAG\", organization: \"coingaming\"},/" mix.exs
+        LSL_VERISION=$(echo $CIRCLE_TAG | cut -c2-)
+        sed -i "s/loyalty_shared_libs.*/loyalty_shared_libs, \"$LSL_VERISION\", organization: \"coingaming\"},/" mix.exs
         git commit -am "chore: lsl update to ${CIRCLE_TAG}"
         git push origin "<<parameters.branch_name>>"
