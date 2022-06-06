@@ -19,10 +19,11 @@ workflows:
           filters: *filters
       - orb-tools/review:
           context: global
+          exclude: RC008,RC009
           filters: *filters
       - shellcheck/check:
           context: global
-          exclude: SC2148,SC2038,SC2086,SC2002,SC2016,RC008,RC009
+          exclude: SC2148,SC2038,SC2086,SC2002,SC2016
           filters: *filters
       - orb-tools/publish:
           orb-name: coingaming/stacks-update
